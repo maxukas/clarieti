@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clarieti | Impresión Express de Etiquetas Térmicas Adhesivas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #07090e;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --accent-primary: #f59e0b;
+            --accent-secondary: #3b82f6;
+            --gradient-cta: linear-gradient(135deg, #f59e0b, #ea580c);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.12);
+            --font-family: 'Inter', sans-serif;
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 15% 20%, rgba(245, 158, 11, 0.12), transparent 50%),
+                radial-gradient(circle at 85% 80%, rgba(59, 130, 246, 0.1), transparent 50%);
+            z-index: -1;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--gradient-cta);
+            color: white;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border: var(--glass-border);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 4rem auto;
+            font-size: 1.1rem;
+        }
+
+        header {
+            position: fixed;
+            top: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            background: rgba(7, 9, 14, 0.7);
+            backdrop-filter: blur(10px);
+            border: var(--glass-border);
+            border-radius: 50px;
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--gradient-cta);
+            border-radius: 6px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+        }
+
+        .hero {
+            padding: 13rem 0 8rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: #fcd34d;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .hero h1 {
+            font-size: 3.8rem;
+            line-height: 1.1;
+            max-width: 900px;
+            margin: 0 auto 1.5rem auto;
+            font-weight: 900;
+            letter-spacing: -2px;
+            background: linear-gradient(to right, #ffffff, #fed7aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 3rem auto;
+            font-weight: 300;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .features {
+            padding: 6rem 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: var(--glass-border);
+            padding: 2.5rem 2rem;
+            border-radius: 1.5rem;
+            transition: 0.4s;
+            position: relative;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(245, 158, 11, 0.4);
+        }
+
+        .icon-box {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            border: var(--glass-border);
+            font-size: 1.4rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .details-section {
+            padding: 4rem 0;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .detail-box {
+            background: var(--bg-card);
+            border: var(--glass-border);
+            padding: 3rem;
+            border-radius: 2rem;
+        }
+
+        .detail-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .formats-list {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .format-badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: var(--glass-border);
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #fcd34d;
+        }
+
+        .location-info {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .location-info strong {
+            color: var(--text-main);
+        }
+
+        .cta-section {
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .cta-box {
+            background: var(--bg-card);
+            border: var(--glass-border);
+            padding: 4rem 3rem;
+            border-radius: 2rem;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.05), rgba(59, 130, 246, 0.05));
+        }
+
+        .cta-box h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .cta-box p {
+            color: var(--text-muted);
+            margin: 0 auto 2rem auto;
+            max-width: 550px;
+        }
+
+        footer {
+            padding: 3rem 0;
+            border-top: var(--glass-border);
+            margin-top: 4rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            header { top: 1rem; padding: 0.6rem 1rem; width: 95%; }
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.6rem; }
+            .hero p { font-size: 1.1rem; }
+            .section-title { font-size: 2rem; }
+            .cta-box { padding: 2.5rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">
+            <div class="logo-icon"></div>
+            Clarieti
+        </a>
+        <nav class="nav-links">
+            <a href="#solutions">Soluciones</a>
+            <a href="#formats">Formatos</a>
+            <a href="#location">Ubicación</a>
+        </nav>
+        <a href="https://wa.me/525627110600" target="_blank" class="btn btn-primary" style="padding: 0.5rem 1.2rem; font-size: 0.85rem;">Pedir por WhatsApp</a>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-badge">⚡️ Ordena desde 15 unidades · Guías 4x6 desde 1 pza · Entrega al día siguiente</div>
+            <h1>Impresión Express de Etiquetas Térmicas Adhesivas</h1>
+            <p>Soluciones bajo demanda adaptadas para tu negocio. Máxima nitidez, adhesivo de alta resistencia y entrega rápida en CDMX y envíos seguros.</p>
+            <div class="hero-btns">
+                <a href="https://wa.me/525627110600" target="_blank" class="btn btn-primary">Cotizar por WhatsApp (56 2711 0600)</a>
+                <a href="#location" class="btn btn-secondary">Ver Punto de Entrega</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="solutions" class="features">
+        <div class="container">
+            <h2 class="section-title">Soluciones para cada necesidad</h2>
+            <p class="section-subtitle">Diseñadas para integrarse perfectamente en tu flujo de trabajo operativo y comercial.</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="icon-box">📦</div>
+                    <h3>E-commerce</h3>
+                    <p>Etiquetas optimizadas para guías de envío (disponibles desde 1 sola impresión 4x6 pulgadas), códigos de barras y control de inventario.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-box">🛵</div>
+                    <h3>Delivery</h3>
+                    <p>Ideal para sellar y etiquetar cajas, sobres y bolsas de alimentos o productos con seguridad.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-box">🍾</div>
+                    <h3>Envases, Botellas y Packaging</h3>
+                    <p>Adhesivos de alta durabilidad y excelente presentación para frascos, botellas y empaques de todo tipo.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-box">🏷️</div>
+                    <h3>Promociones & Eventos</h3>
+                    <p>Destaca tu marca o producto temporal con acabados limpios y llamativos en cualquier formato.</p>
+                </div>
+                <div class="feature-card" style="grid-column: 1 / -1; max-width: 600px; margin: 0 auto;">
+                    <div class="icon-box">✨</div>
+                    <h3>Temporada y Toda Ocasión</h3>
+                    <p>Impresiones personalizadas para fechas especiales, festividades y requerimientos puntuales durante todo el año.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="formats" class="details-section">
+        <div class="container">
+            <div class="details-grid">
+                <div class="detail-box">
+                    <h3>📁 Formatos Aceptados</h3>
+                    <p class="location-info">Envíanos tus diseños listos para imprimir en cualquiera de nuestros formatos compatibles sin perder calidad.</p>
+                    <div class="formats-list">
+                        <span class="format-badge">PDF</span>
+                        <span class="format-badge">JPG</span>
+                        <span class="format-badge">ZPL</span>
+                        <span class="format-badge">PNG</span>
+                    </div>
+                </div>
+                <div class="detail-box" id="location">
+                    <h3>📍 Exhibición y Entrega</h3>
+                    <p class="location-info">
+                        Visita nuestro punto de exhibición y entrega física ubicado en:<br>
+                        <strong>Insurgentes Sur 1413, Colonia Insurgentes Mixcoac, CDMX.</strong><br><br>
+                        <em>Recuerda: Pedidos generales desde 15 unidades (guías de envío desde 1 pza). Entregas y envíos al día siguiente.</em>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-box">
+                <h2>¿Listo para imprimir tus etiquetas?</h2>
+                <p>Ordena desde 15 unidades (o guías de envío 4x6 desde 1 sola pieza) y recíbelo al día siguiente. Escríbenos directamente a WhatsApp.</p>
+                <a href="https://wa.me/525627110600" target="_blank" class="btn btn-primary">Iniciar Pedido por WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Clarieti. Todos los derechos reservados. Impresión Express de Etiquetas Térmicas en CDMX.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
